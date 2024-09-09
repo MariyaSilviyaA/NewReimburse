@@ -15,23 +15,23 @@ Employee Claim Form
         <div class="form-group">
             <label for="date_of_expense">Date of Expense</label>
             <input type="date" class="form-control" id="date_of_expense" name="date_of_expense" style="width: 500px;"
-                value="{{ form_data['date_of_expense'] if form_data else '' }}">
+                value="{{ form_data.get('date_of_expense', '') }}">
         </div>
         <div class="form-group">
             <label for="product">Product</label>
             <input type="text" class="form-control" id="product" name="product" style="width: 500px;"
-                value="{{ form_data['product'] if form_data else '' }}">
+                value="{{ form_data.get('product', '') }}">
         </div>
         <div class="form-group">
             <label for="amount">Amount</label>
 
             <input type="text" class="form-control" id="amount" name="amount" style="width: 500px;" placeholder=" $"
-                value="{{ form_data['amount'] if form_data else '' }}">
+                value="{{ form_data.get('amount', '') }}">
         </div>
         <div class="form-group">
             <label for="description">Description</label>
             <textarea class="form-control" id="description" name="description"
-                style="width: 500px;">{{ form_data['description'] if form_data else '' }}</textarea>
+                style="width: 500px;">{{ form_data.get('description', '') }}</textarea>
         </div>
         <div>
             <button type="submit" class="btn btn-primary" style="margin-top: 20px;">Claim</button>
