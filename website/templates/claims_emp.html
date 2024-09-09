@@ -1,0 +1,45 @@
+{% extends'base.html' %}
+
+
+
+
+
+{% block content %}
+<div style="padding: 30px;">
+    <h1 align="center"> {{ employee.first_name }} {{ employee.last_name }}</h1>
+
+    <a href="{{ url_for('views.claim_reimbursement',company_id=company.id,employee_id=employee.id) }}"
+        class="btn btn-primary" style="float: right;">Add
+        Claim</a>
+
+    <table class="table table-striped" style="padding-top: 30px;">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Product</th>
+                <th>Amount</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+
+
+        <tbody>
+            {% for reimbursement in reimbursements %}
+            <tr>
+
+                <td>{{ reimbursement.date_of_expense.strftime('%d-%m-%Y') }}</td>
+                <td>{{ reimbursement.product }}</td>
+                <td>${{ reimbursement.amount }}</td>
+                <td>{{ reimbursement.description }}</td></a>
+            </tr>
+
+            {% endfor %}
+        </tbody>
+    </table>
+    <div style="display: flex;justify-content: center;align-items: center;margin-top: 30px;">
+        <a href="{{ url_for('views.company_details', company_id=company_id) }}"><button class="btn btn-secondary"
+                style="justify-content: center; width: 129px;">Back</button></a>
+    </div>
+</div>
+
+{% endblock %}
