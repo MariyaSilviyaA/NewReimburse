@@ -2,6 +2,9 @@ from flask import Flask
 from os import path
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
+from werkzeug.utils import secure_filename
+
+UPLOAD_FOLDER = '/Users/francium/Desktop/NewReimburse/website/static/uploads'
 
 
 db = SQLAlchemy()
@@ -22,6 +25,10 @@ def create_app():
 
     from .models import User
 
+    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+
+
 
     create_database(app)
 
@@ -33,6 +40,9 @@ def create_app():
     def load_user(id):
         return User.query.get(int(id))
     return app
+
+
+    
 
 def create_database(app):
     if not path.exists("website/" + DB_NAME):

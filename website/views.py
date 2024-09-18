@@ -5,6 +5,14 @@ from .models import Company,Employee,Reimbursement
 from . import db
 from datetime import datetime
 from sqlalchemy.sql import func
+from werkzeug.utils import secure_filename
+import os
+
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 
 
 views = Blueprint("views", __name__)
@@ -248,7 +256,23 @@ def claim_reimbursement(company_id, employee_id):
         amount = request.form.get('amount')
         description = request.form.get('description', '')
         form_data = request.form
-        
+        file = request.files.get('bill_image')
+        filename = None  
+
+        if file and file.filename:
+                if not allowed_file(file.filename):
+                    raise ValueError('File type not allowed. Only PNG, JPG, JPEG, and GIF are allowed.')
+
+                filename = secure_filename(file.filename)
+                UPLOAD_FOLDER = '/Users/francium/Desktop/NewReimburse/website/static/uploads'
+            
+                if not os.path.exists(UPLOAD_FOLDER):
+                    os.makedirs(UPLOAD_FOLDER)
+
+                file_path = os.path.join(UPLOAD_FOLDER, filename)
+                file.save(file_path)
+        else:
+                file_path = None
         today = datetime.today().date()
         if date_of_expense > today:
                 raise ValueError('Date of expense cannot be in the future.')
@@ -264,6 +288,7 @@ def claim_reimbursement(company_id, employee_id):
             product=product,
             amount=float(amount),
             description=description,
+            bill_image=filename
             
         )
         db.session.add(reimbursement)

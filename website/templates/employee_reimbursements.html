@@ -6,9 +6,8 @@ Employee Claim Form
 
 {% block content %}
 
-<form method="POST">
-    <div
-        style="display: flex;justify-content: center;align-items: center; flex-direction: column; gap:20px; padding-top: 75px;">
+<form method="POST" enctype="multipart/form-data">
+    <div style="display: flex;justify-content: center;align-items: center; flex-direction: column; padding-top: 75px;">
         <h4>Reimbursement Form</h4>
 
 
@@ -32,6 +31,21 @@ Employee Claim Form
             <label for="description">Description</label>
             <textarea class="form-control" id="description" name="description"
                 style="width: 500px;">{{ form_data.get('description', '') }}</textarea>
+
+        </div>
+
+        <div class="form-group" style="width: 500px;margin-bottom: 0;">
+            <label for="bill_image" style="width: 150px;">Invoice Attachment</label>
+        </div>
+
+        <div class="file-upload-wrapper">
+            <div id="file-name" style="margin-left: 2px;"></div>
+            <label for="bill_image" class="file-upload-label">
+                <!-- <i class="fas fa-file-upload"></i> -->
+                <span>Upload Invoice</span>
+            </label>
+            <input type="file" id="bill_image" name="bill_image" accept="image/*" class="file-upload-input">
+
         </div>
         <div>
             <button type="submit" class="btn btn-primary" style="margin-top: 20px;">Claim</button>
@@ -40,6 +54,46 @@ Employee Claim Form
         </div>
     </div>
 </form>
+
+<!-- <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('bill_image').addEventListener('change', function (event) {
+            var fileInput = event.target;
+            var fileName = fileInput.files.length > 0 ? fileInput.files[0].name : 'Upload Invoice';
+            document.getElementById('file-name').textContent = fileName;
+        });
+    });
+</script> -->
+<!-- <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('bill_image').addEventListener('change', function (event) {
+            var fileInput = event.target;
+            var fileName = fileInput.files.length > 0 ? fileInput.files[0].name : 'No file chosen';
+            document.getElementById('file-name').textContent = fileName;
+        });
+    });
+</script> -->
+<script>
+    // document.addEventListener('DOMContentLoaded', () => {
+    //     const fileInput = document.getElementById('bill_image');
+    //     const fileNameDisplay = document.getElementById('file-name');
+
+    //     fileInput.addEventListener('change', () => {
+    //         console.log(fileInput, "fileInput", fileInput.files)
+    //         const fileName = fileInput.files.length ? fileInput.files[0].name : 'No file chosen';
+    //         fileNameDisplay.textContent = fileName;
+    //     });
+    // });
+</script>
+<script>
+    $(document).ready(function () {
+        $('#bill_image').on('change', function () {
+            var fileName = $(this).val().split('\\').pop() || 'No file chosen';
+            $('#file-name').text(fileName);
+        });
+    });
+</script>
+
 
 
 

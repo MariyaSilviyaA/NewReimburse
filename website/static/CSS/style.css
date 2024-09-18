@@ -100,3 +100,43 @@ body {
 .tr {
     cursor: pointer
 }
+
+.file-upload-wrapper {
+    border: 1px solid #d3d3d3;
+    width: 100%;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    /* gap: 10px; */
+    max-width: 500px;
+    height: 40px;
+}
+
+.file-upload-label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 16px;
+    color: #212529;
+    background-color: #e6e6e6;
+    margin-left: auto;
+    border-left: 1px solid #d3d3d3;
+    height: 100%;
+    padding: 0 10px;
+    box-sizing: border-box;
+    margin-bottom: 0;
+}
+
+
+/* .file-upload-label i {
+    margin-right: 5px;
+} */
+
+.file-upload-input {
+    display: none;
+
+}
+
+.fa-receipt {
+    color: green
+}

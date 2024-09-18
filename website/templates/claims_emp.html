@@ -1,16 +1,11 @@
-{% extends'base.html' %}
-
-
-
-
+{% extends 'base.html' %}
 
 {% block content %}
 <div style="padding: 30px;">
     <h1 align="center"> {{ employee.first_name }} {{ employee.last_name }}</h1>
 
-    <a href="{{ url_for('views.claim_reimbursement',company_id=company.id,employee_id=employee.id) }}"
-        class="btn btn-primary" style="float: right;">Add
-        Claim</a>
+    <a href="{{ url_for('views.claim_reimbursement', company_id=company.id, employee_id=employee.id) }}"
+        class="btn btn-primary" style="float: right; margin-bottom: 10px;">Add Claim</a>
 
     <table class="table table-striped" style="padding-top: 30px;">
         <thead>
@@ -19,27 +14,68 @@
                 <th>Product</th>
                 <th>Amount</th>
                 <th>Description</th>
+                <th>Invoice</th>
             </tr>
         </thead>
-
-
         <tbody>
             {% for reimbursement in reimbursements %}
             <tr>
-
                 <td>{{ reimbursement.date_of_expense.strftime('%d-%m-%Y') }}</td>
                 <td>{{ reimbursement.product }}</td>
                 <td>${{ reimbursement.amount }}</td>
-                <td>{{ reimbursement.description }}</td></a>
+                <td>{{ reimbursement.description }}</td>
+                <td>
+                    {% if reimbursement.bill_image %}
+                    <a href="#" class="image-preview"
+                        data-image="{{ url_for('static', filename='uploads/' + reimbursement.bill_image) }}">
+                        <i class="fa-solid fa-receipt fa-lg"></i>
+                    </a>
+                    {% else %}
+                    Invoice N/A
+                    {% endif %}
+                </td>
             </tr>
-
             {% endfor %}
         </tbody>
     </table>
-    <div style="display: flex;justify-content: center;align-items: center;margin-top: 30px;">
-        <a href="{{ url_for('views.company_details', company_id=company_id) }}"><button class="btn btn-secondary"
-                style="justify-content: center; width: 129px;">Back</button></a>
+    <div style="display: flex; justify-content: center; align-items: center; margin-top: 30px;">
+        <a href="{{ url_for('views.company_details', company_id=company_id) }}">
+            <button class="btn btn-secondary" style="justify-content: center; width: 129px;">Back</button>
+        </a>
     </div>
 </div>
+
+
+<div class="modal fade" id="imageModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="imageModalLabel">Invoice Image</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <img id="modalImage" src="" alt="Invoice Image" class="img-fluid" />
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $('.image-preview').on('click', function (e) {
+            e.preventDefault();
+            var imageUrl = $(this).data('image');
+            console.log(imageUrl);
+            $('#modalImage').attr('src', imageUrl);
+            $('#imageModal').modal('show');
+        });
+        $('#imageModal .close').on('click', function () {
+            $('#imageModal').modal('hide');
+        });
+    });
+</script>
 
 {% endblock %}

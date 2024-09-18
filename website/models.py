@@ -42,6 +42,7 @@ class Reimbursement(db.Model):
     product = db.Column(db.String(100), nullable=False)
     amount = db.Column(db.Float, nullable=False)
     description = db.Column(db.Text)
+    bill_image = db.Column(db.String(255), nullable=True)
 
     employee = db.relationship('Employee', backref='reimbursements')
 
